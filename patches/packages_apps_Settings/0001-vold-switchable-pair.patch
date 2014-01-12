@@ -1,40 +1,21 @@
-From a6fe7d0a6eb258899457011c0186164eba1ada46 Mon Sep 17 00:00:00 2001
-From: dhacker29 <davidhackerdvm@gmail.com>
-Date: Sat, 17 Aug 2013 16:35:18 -0500
-Subject: [PATCH] Add setting for Vold Switchable Pair (2/2)
+From b9bea0c099497682813e18aa0f0ddee0d5da208f Mon Sep 17 00:00:00 2001
+From: Kyle Harrison <khwebmail@gmail.com>
+Date: Sun, 12 Jan 2014 15:26:19 +0000
+Subject: [PATCH] [PATCH] Add setting for Vold Switchable Pair (2/2)
 
-This will be hidden unless the device has non-emulated internal storage
-and an external SD, in which case persist.sys.vold.switchablepair will be
-set automaticaly.  This does away with the need for ro.vold.switchablepair
-to be set in the build.prop.
-
-Change-Id: Id83fc90d771ca3a7179f2c50d0ae828eb3dbaa9f
 ---
- AndroidManifest.xml                             |  1 +
- res/values/cm_strings.xml                       |  7 ++++
+ res/values/slim_strings.xml                     |  7 ++++
  res/xml/device_info_memory.xml                  |  5 +++
  src/com/android/settings/deviceinfo/Memory.java | 54 ++++++++++++++++++++++++-
- 4 files changed, 66 insertions(+), 1 deletion(-)
+ 3 files changed, 65 insertions(+), 1 deletion(-)
 
-diff --git a/AndroidManifest.xml b/AndroidManifest.xml
-index 4b3b859..3167c37 100644
---- a/AndroidManifest.xml
-+++ b/AndroidManifest.xml
-@@ -69,6 +69,7 @@
-     <uses-permission android:name="android.permission.MANAGE_DEVICE_ADMINS" />
-     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-     <uses-permission android:name="android.permission.CHANGE_PRIVACY_GUARD_STATE" />
-+    <uses-permission android:name="android.permission.REBOOT" />
- 
-     <permission
-         android:name="android.permission.REQUEST_SUPERUSER"
-diff --git a/res/values/cm_strings.xml b/res/values/cm_strings.xml
-index 6fa1504..1867762 100644
---- a/res/values/cm_strings.xml
-+++ b/res/values/cm_strings.xml
-@@ -611,6 +611,13 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
-     <string name="adb_notify">USB debugging notify</string>
-     <string name="adb_notify_summary">Display a notification when USB debugging is connected</string>
+diff --git a/res/values/slim_strings.xml b/res/values/slim_strings.xml
+index aed4879..d3a21a0 100644
+--- a/res/values/slim_strings.xml
++++ b/res/values/slim_strings.xml
+@@ -902,4 +902,11 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
+     <!-- Minimum Vibration Duration -->
+     <string name="minimum_vibration_duration">Minimum vibration duration</string>
  
 +    <!-- Vold Switchable Pair -->
 +    <string name="storage_switch_title">Use external SD as primary</string>
@@ -43,9 +24,7 @@ index 6fa1504..1867762 100644
 +    <string name="reboot_prompt_title">Reboot required</string>
 +    <string name="reboot_prompt_message">In order to apply the changed configuration, a reboot is required.\n\nDo you want to reboot now?</string>
 +
-     <!-- Android debugging over WiFi -->
-     <string name="adb_over_network">ADB over network</string>
-     <string name="adb_over_network_summary">Enable TCP/IP debugging over network interfaces (Wi-Fi, USB networks). This setting is reset on reboot</string>
+ </resources>
 diff --git a/res/xml/device_info_memory.xml b/res/xml/device_info_memory.xml
 index e905f39..2010b2c 100644
 --- a/res/xml/device_info_memory.xml
@@ -164,5 +143,5 @@ index 999611d..92d9863 100644
 +    }
  }
 -- 
-1.8.1.2
+1.8.5.2
 

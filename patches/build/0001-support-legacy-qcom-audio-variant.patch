@@ -1,9 +1,8 @@
-From e66dc95a38e837f598ee8fb146a5c8152cc5986b Mon Sep 17 00:00:00 2001
-From: Konsta <konsta09@gmail.com>
-Date: Sun, 29 Dec 2013 14:26:11 +0200
-Subject: [PATCH] support legacy qcom audio variant
+From 132e118952e13399bff5639856a3ff432423c9be Mon Sep 17 00:00:00 2001
+From: Kyle Harrison <khwebmail@gmail.com>
+Date: Sun, 12 Jan 2014 14:15:16 +0000
+Subject: [PATCH] [PATCH] support legacy qcom audio variant
 
-Change-Id: I752c2f6380331f6c8f5d4ba427b04e387ecbc604
 ---
  core/qcom_target.mk | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -22,5 +21,5 @@ index e65a6fc..08680b0 100644
              TARGET_GLOBAL_CFLAGS += -DQCOM_DIRECTTRACK
              TARGET_GLOBAL_CPPFLAGS += -DQCOM_DIRECTTRACK
 -- 
-1.8.1.2
+1.8.5.2
 
