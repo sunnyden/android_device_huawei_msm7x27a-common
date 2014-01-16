@@ -1,7 +1,7 @@
-From b9bea0c099497682813e18aa0f0ddee0d5da208f Mon Sep 17 00:00:00 2001
+From 1ba693ba07e225f33c28d1502fa69eaba4237c60 Mon Sep 17 00:00:00 2001
 From: Kyle Harrison <khwebmail@gmail.com>
-Date: Sun, 12 Jan 2014 15:26:19 +0000
-Subject: [PATCH] [PATCH] Add setting for Vold Switchable Pair (2/2)
+Date: Thu, 16 Jan 2014 12:21:59 +0000
+Subject: [PATCH] Add setting for Vold Switchable Pair (2/2)
 
 ---
  res/values/slim_strings.xml                     |  7 ++++
@@ -10,10 +10,10 @@ Subject: [PATCH] [PATCH] Add setting for Vold Switchable Pair (2/2)
  3 files changed, 65 insertions(+), 1 deletion(-)
 
 diff --git a/res/values/slim_strings.xml b/res/values/slim_strings.xml
-index aed4879..d3a21a0 100644
+index 78af6f3..81ab8d7 100644
 --- a/res/values/slim_strings.xml
 +++ b/res/values/slim_strings.xml
-@@ -902,4 +902,11 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
+@@ -916,6 +916,13 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
      <!-- Minimum Vibration Duration -->
      <string name="minimum_vibration_duration">Minimum vibration duration</string>
  
@@ -24,7 +24,9 @@ index aed4879..d3a21a0 100644
 +    <string name="reboot_prompt_title">Reboot required</string>
 +    <string name="reboot_prompt_message">In order to apply the changed configuration, a reboot is required.\n\nDo you want to reboot now?</string>
 +
- </resources>
+     <!-- ListView animation -->
+     <string name="interface_settings_animation_title">Animation options</string>
+     <string name="listview_animation_title">ListView animation</string>
 diff --git a/res/xml/device_info_memory.xml b/res/xml/device_info_memory.xml
 index e905f39..2010b2c 100644
 --- a/res/xml/device_info_memory.xml
