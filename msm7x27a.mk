@@ -150,4 +150,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=eth0 \
     wifi.supplicant_scan_interval=60
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.force_highendgfx=true
+
 $(call inherit-product, vendor/huawei/msm7x27a-common/msm7x27a-common-vendor.mk)
