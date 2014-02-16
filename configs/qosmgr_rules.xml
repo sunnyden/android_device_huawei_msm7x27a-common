@@ -22,6 +22,14 @@ QUALCOMM Proprietary and Confidential.
 	</attributeValue>
       </attribute>
     </assignment>
+    <assignment>
+      <attribute>
+	<attributeId>/sys/devices/system/cpu/cpufreq/intellidemand/sampling_rate</attributeId>
+	<attributeValue>
+	  <string>25000</string>
+	</attributeValue>
+      </attribute>
+    </assignment>
   </rule>
   <rule>
     <booleanFilter>
@@ -37,6 +45,14 @@ QUALCOMM Proprietary and Confidential.
     <assignment>
       <attribute>
 	<attributeId>/sys/devices/system/cpu/cpufreq/ondemand/sampling_rate</attributeId>
+	<attributeValue>
+	  <string>700000</string>
+	</attributeValue>
+      </attribute>
+    </assignment>
+    <assignment>
+      <attribute>
+	<attributeId>/sys/devices/system/cpu/cpufreq/intellidemand/sampling_rate</attributeId>
 	<attributeValue>
 	  <string>700000</string>
 	</attributeValue>
