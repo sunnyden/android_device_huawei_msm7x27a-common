@@ -68,9 +68,6 @@ PRODUCT_COPY_FILES += \
     device/huawei/msm7x27a-common/rootdir/ueventd.huawei.rc:root/ueventd.huawei.rc
 
 PRODUCT_COPY_FILES += \
-    device/huawei/msm7x27a-common/configs/qosmgr_rules.xml:system/etc/qosmgr_rules.xml
-
-PRODUCT_COPY_FILES += \
     device/huawei/msm7x27a-common/configs/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
     device/huawei/msm7x27a-common/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
     device/huawei/msm7x27a-common/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
