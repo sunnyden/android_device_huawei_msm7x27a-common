@@ -142,6 +142,9 @@ on boot
     write /sys/module/pm2/modes/cpu0/power_collapse/suspend_enabled 1
     write /sys/module/pm2/modes/cpu0/power_collapse/idle_enabled 1
 
+    # Run sysinit
+    exec /system/bin/sysinit
+
 on emmc-fs
     # mount mmc partitions
     mount_all /fstab.huawei
