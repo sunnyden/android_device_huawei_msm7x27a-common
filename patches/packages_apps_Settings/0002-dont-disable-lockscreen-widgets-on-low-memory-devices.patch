@@ -1,0 +1,26 @@
+From 4c2667de54e64b8143aec74740cc55f84ebe818e Mon Sep 17 00:00:00 2001
+From: Kyle Harrison <khwebmail@gmail.com>
+Date: Thu, 17 Jul 2014 19:20:44 +0100
+Subject: [PATCH] don't disable lockscreen widgets on low memory devices
+
+---
+ src/com/android/settings/SecuritySettings.java | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/src/com/android/settings/SecuritySettings.java b/src/com/android/settings/SecuritySettings.java
+index 7401c9b..988633d 100644
+--- a/src/com/android/settings/SecuritySettings.java
++++ b/src/com/android/settings/SecuritySettings.java
+@@ -381,8 +381,7 @@ public class SecuritySettings extends RestrictedSettingsFragment
+         // and remove them on low memory devices
+         mEnableKeyguardWidgets = root.findPreference(KEY_ENABLE_WIDGETS);
+         if (mEnableKeyguardWidgets != null) {
+-            if (ActivityManager.isLowRamDeviceStatic()
+-                    || mLockPatternUtils.isLockScreenDisabled()) {
++            if (mLockPatternUtils.isLockScreenDisabled()) {
+                 // Widgets take a lot of RAM, so disable them on low-memory devices
+                 if (mSecurityCategory != null) {
+                     mSecurityCategory.removePreference(root.findPreference(KEY_ENABLE_WIDGETS));
+-- 
+2.0.1
+
