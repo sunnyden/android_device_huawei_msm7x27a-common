@@ -136,7 +136,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ril.subscription.types=NV,RUIM \
     rild.libargs=-d/dev/smd0 \
-    ro.telephony.call_ring.delay=3000 \
+    ro.telephony.call_ring.delay=0 \
     ro.telephony.call_ring.multiple=false
 
 PRODUCT_PROPERTY_OVERRIDES += \
