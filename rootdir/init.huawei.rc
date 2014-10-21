@@ -163,6 +163,20 @@ on boot
     mkdir /data/misc/nfc/param 0755 nfc nfc
     user nfc
     group system
+    
+# Backward compatibility
+    symlink /system/etc /etc
+
+# Right now vendor lives on the same filesystem as system,
+# but someday that may change.
+    symlink /system/vendor /vendor
+    
+# Allow everybody to read the xt_qtaguid resource tracking misc dev.
+# This is needed by any process that uses socket tagging.
+    chmod 0644 /dev/xt_qtaguid
+    
+    chmod 0660 /dev/assd
+    chown smartcard smartcard /dev/assd
 
     # Run sysinit
     start sysinit
