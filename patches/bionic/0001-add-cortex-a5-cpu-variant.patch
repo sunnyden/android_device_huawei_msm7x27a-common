@@ -1,0 +1,35 @@
+From e46ebabd2101dcd3c1a689f7bcba51b128621b40 Mon Sep 17 00:00:00 2001
+From: Kyle Harrison <khwebmail@gmail.com>
+Date: Fri, 7 Nov 2014 17:49:15 +0000
+Subject: [PATCH] add cortex-a5 cpu variant
+
+Change-Id: If018b7be90688262368885536cabe5cfa04e8bca
+---
+ libc/arch-arm/arm.mk                 | 2 +-
+ libc/arch-arm/cortex-a5/cortex-a5.mk | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+ create mode 100644 libc/arch-arm/cortex-a5/cortex-a5.mk
+
+diff --git a/libc/arch-arm/arm.mk b/libc/arch-arm/arm.mk
+index 7d92ac8..44a5dea 100644
+--- a/libc/arch-arm/arm.mk
++++ b/libc/arch-arm/arm.mk
+@@ -77,7 +77,7 @@ endif
+ endif
+ cpu_variant_mk := $(LOCAL_PATH)/arch-arm/$(TARGET_$(my_2nd_arch_prefix)CPU_VARIANT)/$(TARGET_$(my_2nd_arch_prefix)CPU_VARIANT).mk
+ ifeq ($(wildcard $(cpu_variant_mk)),)
+-$(error "TARGET_$(my_2nd_arch_prefix)CPU_VARIANT not set or set to an unknown value. Possible values are cortex-a7, cortex-a8, cortex-a9, cortex-a15, krait, denver. Use generic for devices that do not have a CPU similar to any of the supported cpu variants.")
++$(error "TARGET_$(my_2nd_arch_prefix)CPU_VARIANT not set or set to an unknown value. Possible values are cortex-a5, cortex-a7, cortex-a8, cortex-a9, cortex-a15, krait, denver. Use generic for devices that do not have a CPU similar to any of the supported cpu variants.")
+ endif
+ include $(cpu_variant_mk)
+ libc_common_additional_dependencies += $(cpu_variant_mk)
+diff --git a/libc/arch-arm/cortex-a5/cortex-a5.mk b/libc/arch-arm/cortex-a5/cortex-a5.mk
+new file mode 100644
+index 0000000..944db2c
+--- /dev/null
++++ b/libc/arch-arm/cortex-a5/cortex-a5.mk
+@@ -0,0 +1 @@
++include bionic/libc/arch-arm/cortex-a9/cortex-a9.mk
+-- 
+2.1.3
+
