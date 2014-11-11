@@ -29,10 +29,12 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 # Packages
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
-    audio.primary.msm7x27a \
     audio.usb.default \
-    audio_policy.msm7x27a \
     libaudioutils
+
+#PRODUCT_PACKAGES += \
+#    audio.primary.msm7x27a \
+#    audio_policy.msm7x27a
 
 PRODUCT_PACKAGES += \
     libgenlock \
