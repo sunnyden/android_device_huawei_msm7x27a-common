@@ -181,7 +181,7 @@ on boot
     # Run sysinit
     start sysinit
 
-on emmc-fs
+on fs
     # mount mmc partitions
     mount_all /fstab.huawei
     swapon_all /fstab.huawei
