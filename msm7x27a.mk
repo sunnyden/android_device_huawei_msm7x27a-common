@@ -67,6 +67,14 @@ PRODUCT_PACKAGES += \
     hwmac \
     make_ext4fs \
     setup_fs
+    
+#wifi
+PRODUCT_PACKAGES += \
+    libwpa_client \
+    hostapd \
+    dhcpcd.conf \
+    wpa_supplicant \
+    wpa_supplicant.conf
 
 # Files
 PRODUCT_COPY_FILES += \
