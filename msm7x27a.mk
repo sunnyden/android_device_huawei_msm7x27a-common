@@ -138,7 +138,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.hwc.fakevsync=1 \
     ro.max.fling_velocity=4000 \
     ro.opengles.version=131072 \
-    ro.sf.lcd_density=200
+    ro.sf.lcd_density=200 \
+    persist.sys.force_highendgfx=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapgrowthlimit=48m \
