@@ -1,4 +1,4 @@
-From 8593208d2fd74fb8dbdf136d75ea1e2e0edd4427 Mon Sep 17 00:00:00 2001
+From abcc07672932582352ff4aed2dc68934f1b3d851 Mon Sep 17 00:00:00 2001
 From: Kyle Harrison <khwebmail@gmail.com>
 Date: Mon, 24 Nov 2014 00:53:10 +0000
 Subject: [PATCH] Add setting for vold switchable pair
@@ -11,10 +11,10 @@ Change-Id: Ie697b747d3b8a1a09b2a1c52aa653393f6172f0c
  3 files changed, 65 insertions(+), 1 deletion(-)
 
 diff --git a/res/values/slim_strings.xml b/res/values/slim_strings.xml
-index c05d249..e492c2a 100644
+index 09e2883..88bb1c5 100644
 --- a/res/values/slim_strings.xml
 +++ b/res/values/slim_strings.xml
-@@ -101,6 +101,13 @@
+@@ -131,6 +131,13 @@
      <string name="ime_switcher_notify">Selector notification</string>
      <string name="ime_switcher_notify_summary">Display input method selector notification</string>
  
@@ -29,14 +29,14 @@ index c05d249..e492c2a 100644
      <string name="app_security_title">App security</string>
      <string name="privacy_guard_dlg_title">Enable Privacy Guard?</string>
 diff --git a/res/xml/device_info_memory.xml b/res/xml/device_info_memory.xml
-index 38cc94a..b2c5071 100644
+index 36da89e..e2c316e 100644
 --- a/res/xml/device_info_memory.xml
 +++ b/res/xml/device_info_memory.xml
 @@ -19,6 +19,12 @@
          android:title="@string/storage_settings"
          settings:keywords="@string/keywords_storage">
  
-+    <CheckBoxPreference
++    <SwitchPreference
 +        android:key="key_switch_storage"
 +        android:title="@string/storage_switch_title"
 +        android:summaryOn="@string/storage_switch_summary_on"
@@ -44,12 +44,12 @@ index 38cc94a..b2c5071 100644
 +
  <!-- Preference categories are dynamically created based on the list of available storage volumes -->
  
- </PreferenceScreen>
+     <PreferenceCategory
 diff --git a/src/com/android/settings/deviceinfo/Memory.java b/src/com/android/settings/deviceinfo/Memory.java
-index 1958f38..46415ab 100644
+index 0488e18..32c91c8 100644
 --- a/src/com/android/settings/deviceinfo/Memory.java
 +++ b/src/com/android/settings/deviceinfo/Memory.java
-@@ -32,15 +32,19 @@ import android.hardware.usb.UsbManager;
+@@ -32,18 +32,22 @@ import android.hardware.usb.UsbManager;
  import android.os.Bundle;
  import android.os.Environment;
  import android.os.IBinder;
@@ -62,30 +62,33 @@ index 1958f38..46415ab 100644
  import android.os.storage.StorageEventListener;
  import android.os.storage.StorageManager;
  import android.os.storage.StorageVolume;
-+import android.preference.CheckBoxPreference;
++import android.preference.SwitchPreference;
+ import android.preference.ListPreference;
  import android.preference.Preference;
  import android.preference.PreferenceScreen;
+ import android.preference.Preference.OnPreferenceChangeListener;
+ import android.provider.Settings;
 +import android.text.TextUtils;
  import android.util.Log;
  import android.view.Menu;
  import android.view.MenuInflater;
-@@ -83,6 +87,10 @@ public class Memory extends SettingsPreferenceFragment implements Indexable {
+@@ -91,6 +95,10 @@ public class Memory extends SettingsPreferenceFragment
      private UsbManager mUsbManager;
  
      private ArrayList<StorageVolumePreferenceCategory> mCategories = Lists.newArrayList();
 +    private static final String KEY_SWITCH_STORAGE = "key_switch_storage";
 +    private static final String VOLD_SWITCH_PERSIST_PROP = "persist.sys.vold.switchexternal";
 +    private static final String VOLD_SWITCHABLEPAIR_PROP = "persist.sys.vold.switchablepair";
-+    private CheckBoxPreference mSwitchStoragePref;
++    private SwitchPreference mSwitchStoragePref;
  
      @Override
      public void onCreate(Bundle icicle) {
-@@ -97,6 +105,27 @@ public class Memory extends SettingsPreferenceFragment implements Indexable {
+@@ -105,6 +113,27 @@ public class Memory extends SettingsPreferenceFragment
  
          addPreferencesFromResource(R.xml.device_info_memory);
  
 +        String voldswitch = SystemProperties.get(VOLD_SWITCH_PERSIST_PROP, "0");
-+        mSwitchStoragePref = (CheckBoxPreference) findPreference(KEY_SWITCH_STORAGE);
++        mSwitchStoragePref = (SwitchPreference) findPreference(KEY_SWITCH_STORAGE);
 +        mSwitchStoragePref.setChecked("1".equals(voldswitch));
 +        if (!Environment.isExternalStorageEmulated()) {
 +            Log.i(TAG, "Checking to see if vold switch is possible on this device.");
@@ -108,7 +111,7 @@ index 1958f38..46415ab 100644
          addCategory(StorageVolumePreferenceCategory.buildForInternal(context));
  
          final StorageVolume[] storageVolumes = mStorageManager.getVolumeList();
-@@ -216,7 +245,13 @@ public class Memory extends SettingsPreferenceFragment implements Indexable {
+@@ -230,7 +259,13 @@ public class Memory extends SettingsPreferenceFragment
  
      @Override
      public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -123,7 +126,7 @@ index 1958f38..46415ab 100644
              ConfirmClearCacheFragment.show(this);
              return true;
          }
-@@ -500,4 +535,20 @@ public class Memory extends SettingsPreferenceFragment implements Indexable {
+@@ -529,4 +564,20 @@ public class Memory extends SettingsPreferenceFragment
              }
          };
  
