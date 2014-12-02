@@ -1,4 +1,4 @@
-From 4f72a945c8f626d409188061cecacade72499e5a Mon Sep 17 00:00:00 2001
+From 9d44764bda400b09187f0e4b0507b9b328595c82 Mon Sep 17 00:00:00 2001
 From: Kyle Harrison <khwebmail@gmail.com>
 Date: Sat, 22 Nov 2014 22:25:21 +0000
 Subject: [PATCH] Add msm7x27a for DirectTrack and legacy audio
@@ -23,10 +23,10 @@ index bb81272..f6a2a6b 100644
  LOCAL_SRC_FILES += \
      IDirectTrack.cpp \
 diff --git a/media/libstagefright/Android.mk b/media/libstagefright/Android.mk
-index cb74769..bb5b1b8 100644
+index c678db1..83fad58 100644
 --- a/media/libstagefright/Android.mk
 +++ b/media/libstagefright/Android.mk
-@@ -104,7 +104,7 @@ LOCAL_SHARED_LIBRARIES := \
+@@ -107,7 +107,7 @@ LOCAL_SHARED_LIBRARIES := \
          libpowermanager
  
  ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
@@ -35,15 +35,15 @@ index cb74769..bb5b1b8 100644
  ifeq ($(BOARD_USES_LEGACY_ALSA_AUDIO),true)
     ifeq ($(USE_TUNNEL_MODE),true)
          LOCAL_CFLAGS += -DUSE_TUNNEL_MODE
-@@ -173,7 +173,7 @@ LOCAL_SHARED_LIBRARIES += \
+@@ -180,7 +180,7 @@ LOCAL_SHARED_LIBRARIES += \
          libstagefright_foundation \
          libdl
  
 -LOCAL_CFLAGS += -Wno-multichar
 +LOCAL_CFLAGS += -Wno-multichar -Wno-unused-parameter
  
- LOCAL_MODULE:= libstagefright
- 
+ ifeq ($(BOARD_USE_SAMSUNG_COLORFORMAT), true)
+ LOCAL_CFLAGS += -DUSE_SAMSUNG_COLORFORMAT
 -- 
 2.1.3
 
