@@ -1,4 +1,4 @@
-From abcc07672932582352ff4aed2dc68934f1b3d851 Mon Sep 17 00:00:00 2001
+From 83dd7842a295fd7c44a8927f02cd181cef86b42e Mon Sep 17 00:00:00 2001
 From: Kyle Harrison <khwebmail@gmail.com>
 Date: Mon, 24 Nov 2014 00:53:10 +0000
 Subject: [PATCH] Add setting for vold switchable pair
@@ -11,7 +11,7 @@ Change-Id: Ie697b747d3b8a1a09b2a1c52aa653393f6172f0c
  3 files changed, 65 insertions(+), 1 deletion(-)
 
 diff --git a/res/values/slim_strings.xml b/res/values/slim_strings.xml
-index 09e2883..88bb1c5 100644
+index 75d31f0..45deb38 100644
 --- a/res/values/slim_strings.xml
 +++ b/res/values/slim_strings.xml
 @@ -131,6 +131,13 @@
@@ -29,7 +29,7 @@ index 09e2883..88bb1c5 100644
      <string name="app_security_title">App security</string>
      <string name="privacy_guard_dlg_title">Enable Privacy Guard?</string>
 diff --git a/res/xml/device_info_memory.xml b/res/xml/device_info_memory.xml
-index 36da89e..e2c316e 100644
+index 36da89e..26d464f 100644
 --- a/res/xml/device_info_memory.xml
 +++ b/res/xml/device_info_memory.xml
 @@ -19,6 +19,12 @@
@@ -46,16 +46,17 @@ index 36da89e..e2c316e 100644
  
      <PreferenceCategory
 diff --git a/src/com/android/settings/deviceinfo/Memory.java b/src/com/android/settings/deviceinfo/Memory.java
-index 0488e18..32c91c8 100644
+index 97565ba..fd0416a 100644
 --- a/src/com/android/settings/deviceinfo/Memory.java
 +++ b/src/com/android/settings/deviceinfo/Memory.java
-@@ -32,18 +32,22 @@ import android.hardware.usb.UsbManager;
+@@ -32,20 +32,24 @@ import android.hardware.usb.UsbManager;
  import android.os.Bundle;
  import android.os.Environment;
  import android.os.IBinder;
 +import android.os.PowerManager;
  import android.os.RemoteException;
  import android.os.ServiceManager;
+ import android.os.UserHandle;
 +import android.os.SystemProperties;
  import android.os.UserManager;
  import android.os.storage.IMountService;
@@ -65,6 +66,7 @@ index 0488e18..32c91c8 100644
 +import android.preference.SwitchPreference;
  import android.preference.ListPreference;
  import android.preference.Preference;
+ import android.preference.PreferenceCategory;
  import android.preference.PreferenceScreen;
  import android.preference.Preference.OnPreferenceChangeListener;
  import android.provider.Settings;
@@ -72,7 +74,7 @@ index 0488e18..32c91c8 100644
  import android.util.Log;
  import android.view.Menu;
  import android.view.MenuInflater;
-@@ -91,6 +95,10 @@ public class Memory extends SettingsPreferenceFragment
+@@ -94,6 +98,10 @@ public class Memory extends SettingsPreferenceFragment
      private UsbManager mUsbManager;
  
      private ArrayList<StorageVolumePreferenceCategory> mCategories = Lists.newArrayList();
@@ -83,7 +85,7 @@ index 0488e18..32c91c8 100644
  
      @Override
      public void onCreate(Bundle icicle) {
-@@ -105,6 +113,27 @@ public class Memory extends SettingsPreferenceFragment
+@@ -108,6 +116,27 @@ public class Memory extends SettingsPreferenceFragment
  
          addPreferencesFromResource(R.xml.device_info_memory);
  
@@ -111,7 +113,7 @@ index 0488e18..32c91c8 100644
          addCategory(StorageVolumePreferenceCategory.buildForInternal(context));
  
          final StorageVolume[] storageVolumes = mStorageManager.getVolumeList();
-@@ -230,7 +259,13 @@ public class Memory extends SettingsPreferenceFragment
+@@ -240,7 +269,13 @@ public class Memory extends SettingsPreferenceFragment
  
      @Override
      public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -126,7 +128,7 @@ index 0488e18..32c91c8 100644
              ConfirmClearCacheFragment.show(this);
              return true;
          }
-@@ -529,4 +564,20 @@ public class Memory extends SettingsPreferenceFragment
+@@ -539,4 +574,20 @@ public class Memory extends SettingsPreferenceFragment
              }
          };
  
