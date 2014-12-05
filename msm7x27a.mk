@@ -57,8 +57,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     gps.msm7x27a
 
-#PRODUCT_PACKAGES += \
-#    camera.msm7x27a
+PRODUCT_PACKAGES += \
+    camera.msm7x27a
 
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
@@ -178,5 +178,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
    media.stagefright.enable-fma2dp=true \
    media.stagefright.enable-aac=true \
    media.stagefright.enable-qcp=true
+
+# Newer camera API isn't supported.
+PRODUCT_PROPERTY_OVERRIDES += \
+   camera2.portability.force_api=1
 
 $(call inherit-product, vendor/huawei/msm7x27a-common/msm7x27a-common-vendor.mk)
