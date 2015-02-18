@@ -42,6 +42,9 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 
 TARGET_ARCH_LOWMEM := true
 
+# Use dlmalloc instead of jemalloc for mallocs on low-ram targets
+MALLOC_IMPL := dlmalloc
+
 # Qualcomm hardware
 BOARD_USES_QCOM_HARDWARE := true
 COMMON_GLOBAL_CFLAGS += -DUSE_MDP3
