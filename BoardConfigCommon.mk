@@ -69,6 +69,7 @@ TARGET_GLOBAL_CFLAGS += -mfloat-abi=softfp -mfpu=neon-vfpv4 -mtune=cortex-a5
 TARGET_GLOBAL_CPPFLAGS += -mfloat-abi=softfp -mfpu=neon-vfpv4 -mtune=cortex-a5
 
 # Audio
+TARGET_PROVIDES_LIBAUDIO := true
 BOARD_USES_LEGACY_ALSA_AUDIO := true
 
 # Bluetooth
