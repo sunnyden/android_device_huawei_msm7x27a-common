@@ -169,7 +169,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Audio
 PRODUCT_PROPERTY_OVERRIDES += \
-    audio.gapless.playback.disable=true
+    audio.gapless.playback.disable=true \
+    audio.offload.disable=1
 
 # Low RAM
 PRODUCT_PROPERTY_OVERRIDES += \
