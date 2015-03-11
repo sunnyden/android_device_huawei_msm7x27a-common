@@ -1,22 +1,22 @@
-From 83dd7842a295fd7c44a8927f02cd181cef86b42e Mon Sep 17 00:00:00 2001
-From: Kyle Harrison <khwebmail@gmail.com>
-Date: Mon, 24 Nov 2014 00:53:10 +0000
+From 323e0d09ab48280ed28a12a8c73c2429f85eb455 Mon Sep 17 00:00:00 2001
+From: fonz93 <fonz993@hotmail.it>
+Date: Sun, 8 Feb 2015 11:05:03 +0100
 Subject: [PATCH] Add setting for vold switchable pair
 
-Change-Id: Ie697b747d3b8a1a09b2a1c52aa653393f6172f0c
+original commit: https://github.com/Dazzozo/android_device_huawei_msm7x27a-common/blob/cm-11.0/patches/packages_apps_Settings/0001-vold-switchable-pair.patch
 ---
- res/values/slim_strings.xml                     |  7 ++++
+ res/values/cm_strings.xml                       |  7 ++++
  res/xml/device_info_memory.xml                  |  6 +++
  src/com/android/settings/deviceinfo/Memory.java | 53 ++++++++++++++++++++++++-
  3 files changed, 65 insertions(+), 1 deletion(-)
 
-diff --git a/res/values/slim_strings.xml b/res/values/slim_strings.xml
-index 75d31f0..45deb38 100644
---- a/res/values/slim_strings.xml
-+++ b/res/values/slim_strings.xml
-@@ -131,6 +131,13 @@
-     <string name="ime_switcher_notify">Selector notification</string>
-     <string name="ime_switcher_notify_summary">Display input method selector notification</string>
+diff --git a/res/values/cm_strings.xml b/res/values/cm_strings.xml
+index 371a6b0..c6a2979 100644
+--- a/res/values/cm_strings.xml
++++ b/res/values/cm_strings.xml
+@@ -293,6 +293,13 @@
+     <string name="proximity_wake_title">Prevent accidental wake-up</string>
+     <string name="proximity_wake_summary">Check the proximity sensor prior to waking up screen</string>
  
 +    <!-- Vold Switchable Pair -->
 +    <string name="storage_switch_title">Use external SD as primary</string>
@@ -25,11 +25,11 @@ index 75d31f0..45deb38 100644
 +    <string name="reboot_prompt_title">Reboot required</string>
 +    <string name="reboot_prompt_message">In order to apply the changed configuration, a reboot is required.\n\nDo you want to reboot now?</string>
 +
-     <!-- Privacy Guard -->
-     <string name="app_security_title">App security</string>
-     <string name="privacy_guard_dlg_title">Enable Privacy Guard?</string>
+     <!-- Privacy Settings Header item -->
+     <string name="privacy_settings_cyanogenmod_title">Privacy</string>
+ 
 diff --git a/res/xml/device_info_memory.xml b/res/xml/device_info_memory.xml
-index 36da89e..26d464f 100644
+index 38cc94a..980a399 100644
 --- a/res/xml/device_info_memory.xml
 +++ b/res/xml/device_info_memory.xml
 @@ -19,6 +19,12 @@
@@ -44,48 +44,44 @@ index 36da89e..26d464f 100644
 +
  <!-- Preference categories are dynamically created based on the list of available storage volumes -->
  
-     <PreferenceCategory
+ </PreferenceScreen>
 diff --git a/src/com/android/settings/deviceinfo/Memory.java b/src/com/android/settings/deviceinfo/Memory.java
-index 97565ba..fd0416a 100644
+index aafbbe2..c299a0e 100644
 --- a/src/com/android/settings/deviceinfo/Memory.java
 +++ b/src/com/android/settings/deviceinfo/Memory.java
-@@ -32,20 +32,24 @@ import android.hardware.usb.UsbManager;
+@@ -32,6 +32,7 @@ import android.hardware.usb.UsbManager;
  import android.os.Bundle;
  import android.os.Environment;
  import android.os.IBinder;
 +import android.os.PowerManager;
  import android.os.RemoteException;
  import android.os.ServiceManager;
- import android.os.UserHandle;
-+import android.os.SystemProperties;
  import android.os.UserManager;
- import android.os.storage.IMountService;
+@@ -39,9 +40,11 @@ import android.os.storage.IMountService;
  import android.os.storage.StorageEventListener;
  import android.os.storage.StorageManager;
  import android.os.storage.StorageVolume;
 +import android.preference.SwitchPreference;
- import android.preference.ListPreference;
+ import android.os.SystemProperties;
  import android.preference.Preference;
- import android.preference.PreferenceCategory;
  import android.preference.PreferenceScreen;
- import android.preference.Preference.OnPreferenceChangeListener;
- import android.provider.Settings;
 +import android.text.TextUtils;
  import android.util.Log;
  import android.view.Menu;
  import android.view.MenuInflater;
-@@ -94,6 +98,10 @@ public class Memory extends SettingsPreferenceFragment
-     private UsbManager mUsbManager;
+@@ -87,6 +90,11 @@ public class Memory extends SettingsPreferenceFragment implements Indexable {
  
      private ArrayList<StorageVolumePreferenceCategory> mCategories = Lists.newArrayList();
+ 
 +    private static final String KEY_SWITCH_STORAGE = "key_switch_storage";
 +    private static final String VOLD_SWITCH_PERSIST_PROP = "persist.sys.vold.switchexternal";
 +    private static final String VOLD_SWITCHABLEPAIR_PROP = "persist.sys.vold.switchablepair";
 +    private SwitchPreference mSwitchStoragePref;
- 
++
      @Override
      public void onCreate(Bundle icicle) {
-@@ -108,6 +116,27 @@ public class Memory extends SettingsPreferenceFragment
+         super.onCreate(icicle);
+@@ -100,6 +108,27 @@ public class Memory extends SettingsPreferenceFragment implements Indexable {
  
          addPreferencesFromResource(R.xml.device_info_memory);
  
@@ -113,7 +109,7 @@ index 97565ba..fd0416a 100644
          addCategory(StorageVolumePreferenceCategory.buildForInternal(context));
  
          final StorageVolume[] storageVolumes = mStorageManager.getVolumeList();
-@@ -240,7 +269,13 @@ public class Memory extends SettingsPreferenceFragment
+@@ -241,7 +270,13 @@ public class Memory extends SettingsPreferenceFragment implements Indexable {
  
      @Override
      public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -128,7 +124,7 @@ index 97565ba..fd0416a 100644
              ConfirmClearCacheFragment.show(this);
              return true;
          }
-@@ -539,4 +574,20 @@ public class Memory extends SettingsPreferenceFragment
+@@ -565,4 +600,20 @@ public class Memory extends SettingsPreferenceFragment implements Indexable {
              }
          };
  
@@ -150,5 +146,4 @@ index 97565ba..fd0416a 100644
 +    }
  }
 -- 
-2.1.3
-
+1.9.1
