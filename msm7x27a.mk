@@ -208,4 +208,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
    config.disable_atlas=true
 
+# Use ART small mode
+PRODUCT_PROPERTY_OVERRIDES += \
+   dalvik.vm.dex2oat-filter=interpret-only \
+   dalvik.vm.image-dex2oat-filter=speed
+
 $(call inherit-product, vendor/huawei/msm7x27a-common/msm7x27a-common-vendor.mk)
