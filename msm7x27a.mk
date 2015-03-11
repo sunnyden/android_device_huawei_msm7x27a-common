@@ -197,6 +197,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
    media.stagefright.enable-aac=true \
    media.stagefright.enable-qcp=true
 
+PRODUCT_PROPERTY_OVERRIDES += \
+   mm.enable.smoothstreaming=true
+
 # Newer camera API isn't supported.
 PRODUCT_PROPERTY_OVERRIDES += \
    camera2.portability.force_api=1
