@@ -1,0 +1,22 @@
+From 8d0d81011a8bfad3a880058665a54cb7916cb4ab Mon Sep 17 00:00:00 2001
+From: Lorenzo <fonz993@hotmail.it>
+Date: Sun, 8 Feb 2015 12:12:57 +0100
+Subject: [PATCH] add msm7x27a support
+
+---
+ core/qcom_utils.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/core/qcom_utils.mk b/core/qcom_utils.mk
+index 1177ad4..01d24c8 100755
+--- a/core/qcom_utils.mk
++++ b/core/qcom_utils.mk
+@@ -1,5 +1,6 @@
+ # Board platforms lists to be used for
+ # TARGET_BOARD_PLATFORM specific featurization
++QCOM_BOARD_PLATFORMS += msm7x27a
+ QCOM_BOARD_PLATFORMS += msm7x30
+ QCOM_BOARD_PLATFORMS += msm8226
+ QCOM_BOARD_PLATFORMS += msm8610
+-- 
+1.9.1
