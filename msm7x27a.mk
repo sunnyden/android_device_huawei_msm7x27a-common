@@ -148,13 +148,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.hwc.fakevsync=1 \
     ro.max.fling_velocity=4000 \
     ro.opengles.version=131072 \
-    ro.sf.lcd_density=240 \
-    persist.sys.force_highendgfx=true
+    ro.sf.lcd_density=240
 
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapgrowthlimit=52m \
-    dalvik.vm.heapsize=128m \
-    ro.config.low_ram=true
+    dalvik.vm.heapsize=128m
 
 PRODUCT_PROPERTY_OVERRIDES += \
     com.qc.hardware=true \
@@ -176,11 +174,19 @@ PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=eth0 \
     wifi.supplicant_scan_interval=60
 
+# Audio
 PRODUCT_PROPERTY_OVERRIDES += \
-    audio.gapless.playback.disable=true \
-    ro.sys.fw.bg_apps_limit=16 \
-    ro.config.max_starting_bg=8
+    audio.gapless.playback.disable=true
 
+# Low RAM
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config.low_ram=true \
+    config.disable_atlas=true \
+    dalvik.vm.jit.codecachesize=0 \
+    persist.sys.force_highendgfx=true \
+    ro.config.max_starting_bg=8 \
+    ro.sys.fw.bg_apps_limit=16
+    
 # FM Radio
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.fm.analogpath.supported=false \
@@ -203,10 +209,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Newer camera API isn't supported.
 PRODUCT_PROPERTY_OVERRIDES += \
    camera2.portability.force_api=1
-
-# Disable atlas services on low-ram targets
-PRODUCT_PROPERTY_OVERRIDES += \
-   config.disable_atlas=true
 
 # Use ART small mode
 PRODUCT_PROPERTY_OVERRIDES += \

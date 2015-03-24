@@ -40,10 +40,9 @@ TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
 
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
-TARGET_ARCH_LOWMEM := true
-
-# Use dlmalloc instead of jemalloc for mallocs on low-ram targets
+# Low RAM settings
 MALLOC_IMPL := dlmalloc
+TARGET_BOOTANIMATION_TEXTURE_CACHE := false
 
 # Qualcomm hardware
 BOARD_USES_QCOM_HARDWARE := true
