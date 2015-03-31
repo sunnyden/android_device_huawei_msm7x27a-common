@@ -24,8 +24,6 @@ DEVICE_PACKAGE_OVERLAYS += device/huawei/msm7x27a-common/overlay
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 
-PRODUCT_TAGS += dalvik.gc.type-precise
-
 # Packages
 PRODUCT_PACKAGES += \
     audio.primary.msm7x27a \
