@@ -145,13 +145,7 @@ TARGET_CUSTOM_WIFI := ../../device/huawei/msm7x27a-common/libhardware_legacy/wif
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # Enable dex-preoptimization to speed up first boot sequence
-ifeq ($(HOST_OS),linux)
-  ifeq ($(TARGET_BUILD_VARIANT),userdebug)
-    ifeq ($(WITH_DEXPREOPT),)
-      WITH_DEXPREOPT := true
-    endif
-  endif
-endif
+WITH_DEXPREOPT := true
 WITH_DEXPREOPT_PIC := true
 DONT_DEXPREOPT_PREBUILTS := true
 
