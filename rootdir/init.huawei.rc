@@ -163,6 +163,9 @@ on boot
     chmod 0664 /sys/module/lowmemorykiller/parameters/adj
     chown root system /sys/module/lowmemorykiller/parameters/minfree
     chmod 0664 /sys/module/lowmemorykiller/parameters/minfree
+	
+	# enable sysrq
+	write /proc/sys/kernel/sysrq 1
 
 # msm specific files that need to be created on /data
 on post-fs-data
