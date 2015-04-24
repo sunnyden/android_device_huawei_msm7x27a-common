@@ -1,4 +1,4 @@
-From 72b0cd0fb365ec54a52ee934a6ffc3dab8f1391f Mon Sep 17 00:00:00 2001
+From 6110a32f5890eddb5e3a59e09bb70ad4c60d73cf Mon Sep 17 00:00:00 2001
 From: Mahesh Lanka <mlanka@codeaurora.org>
 Date: Fri, 23 Dec 2011 13:17:09 +0000
 Subject: [PATCH] libstagefright: Enable meta mode for 7x27a video encoder
@@ -18,7 +18,7 @@ frame done callback from video encoder component.
  5 files changed, 27 insertions(+), 3 deletions(-)
 
 diff --git a/include/media/stagefright/MediaCodecSource.h b/include/media/stagefright/MediaCodecSource.h
-index 65b73a9..a8dc05e 100644
+index edd6494..7c0ba3d 100644
 --- a/include/media/stagefright/MediaCodecSource.h
 +++ b/include/media/stagefright/MediaCodecSource.h
 @@ -40,8 +40,11 @@ class MetaData;
@@ -36,11 +36,11 @@ index 65b73a9..a8dc05e 100644
  
      static sp<MediaCodecSource> Create(
 diff --git a/media/libmediaplayerservice/Android.mk b/media/libmediaplayerservice/Android.mk
-index 8231475..5df9869 100644
+index 019e4c7..1aa5e74 100644
 --- a/media/libmediaplayerservice/Android.mk
 +++ b/media/libmediaplayerservice/Android.mk
-@@ -67,6 +67,10 @@ ifeq ($(TARGET_ENABLE_QC_AV_ENHANCEMENTS),true)
-     LOCAL_C_INCLUDES += $(TOP)/$(call project-path-for,qcom-media)/mm-core/inc
+@@ -72,6 +72,10 @@ ifeq ($(strip $(AUDIO_FEATURE_ENABLED_EXTN_FLAC_DECODER)),true)
+ endif
  endif
  
 +ifeq ($(TARGET_BOARD_PLATFORM),msm7x27a)
@@ -51,10 +51,10 @@ index 8231475..5df9869 100644
  
  include $(call all-makefiles-under,$(LOCAL_PATH))
 diff --git a/media/libmediaplayerservice/StagefrightRecorder.cpp b/media/libmediaplayerservice/StagefrightRecorder.cpp
-index ced94ce..eaee0a6 100644
+index 90d4a25..eb98fac 100644
 --- a/media/libmediaplayerservice/StagefrightRecorder.cpp
 +++ b/media/libmediaplayerservice/StagefrightRecorder.cpp
-@@ -1333,6 +1333,9 @@ void StagefrightRecorder::clipVideoFrameWidth() {
+@@ -1339,6 +1339,9 @@ void StagefrightRecorder::clipVideoFrameWidth() {
  
  status_t StagefrightRecorder::checkVideoEncoderCapabilities(
          bool *supportsCameraSourceMetaDataMode) {
@@ -64,7 +64,7 @@ index ced94ce..eaee0a6 100644
      /* hardware codecs must support camera source meta data mode */
      Vector<CodecCapabilities> codecs;
      OMXClient client;
-@@ -1349,6 +1352,7 @@ status_t StagefrightRecorder::checkVideoEncoderCapabilities(
+@@ -1355,6 +1358,7 @@ status_t StagefrightRecorder::checkVideoEncoderCapabilities(
              false /* decoder */, true /* hwCodec */, &codecs);
  
      *supportsCameraSourceMetaDataMode = codecs.size() > 0;
@@ -72,7 +72,7 @@ index ced94ce..eaee0a6 100644
      ALOGV("encoder %s camera source meta-data mode",
              *supportsCameraSourceMetaDataMode ? "supports" : "DOES NOT SUPPORT");
  
-@@ -1721,6 +1725,9 @@ status_t StagefrightRecorder::setupVideoEncoder(
+@@ -1726,6 +1730,9 @@ status_t StagefrightRecorder::setupVideoEncoder(
      uint32_t flags = 0;
      if (mIsMetaDataStoredInVideoBuffers) {
          flags |= MediaCodecSource::FLAG_USE_METADATA_INPUT;
@@ -83,11 +83,11 @@ index ced94ce..eaee0a6 100644
  
      if (cameraSource == NULL) {
 diff --git a/media/libstagefright/Android.mk b/media/libstagefright/Android.mk
-index d0a4ba0..4611e90 100644
+index 708900d..ee7d830 100644
 --- a/media/libstagefright/Android.mk
 +++ b/media/libstagefright/Android.mk
-@@ -210,6 +210,10 @@ LOCAL_C_INCLUDES += \
- 
+@@ -230,6 +230,10 @@ LOCAL_C_INCLUDES += \
+ 	$(TOP)/hardware/samsung/exynos4/include
  endif
  
 +ifeq ($(TARGET_BOARD_PLATFORM),msm7x27a)
@@ -98,7 +98,7 @@ index d0a4ba0..4611e90 100644
  
  LOCAL_MODULE_TAGS := optional
 diff --git a/media/libstagefright/MediaCodecSource.cpp b/media/libstagefright/MediaCodecSource.cpp
-index 0c6ceae..a8489cc 100644
+index db8142d..8865bf1 100644
 --- a/media/libstagefright/MediaCodecSource.cpp
 +++ b/media/libstagefright/MediaCodecSource.cpp
 @@ -431,7 +431,13 @@ status_t MediaCodecSource::initEncoder() {
@@ -117,5 +117,5 @@ index 0c6ceae..a8489cc 100644
          mOutputFormat->setInt32("create-input-buffers-suspended", 1);
      }
 -- 
-2.3.0
+2.3.6
 

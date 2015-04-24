@@ -1,4 +1,4 @@
-From 60084ba40b4ee07d0476dcea980ca79b3d2ffdf5 Mon Sep 17 00:00:00 2001
+From b6a0475801dcf3cca195d8e8dea14216355bee4b Mon Sep 17 00:00:00 2001
 From: Kyle Harrison <khwebmail@gmail.com>
 Date: Mon, 24 Nov 2014 15:47:03 +0000
 Subject: [PATCH] Update Huawei SoftapControllerATH for 5.0
@@ -7,12 +7,12 @@ Subject: [PATCH] Update Huawei SoftapControllerATH for 5.0
  server/Android.mk              |  13 +-
  server/CommandListener.cpp     |  11 +-
  server/SoftapController.h      |   8 +
- server/SoftapControllerATH.cpp | 817 +++++++++++++++++++++++++++++++++++++++++
+ server/SoftapControllerATH.cpp | 816 +++++++++++++++++++++++++++++++++++++++++
  4 files changed, 845 insertions(+), 3 deletions(-)
  create mode 100644 server/SoftapControllerATH.cpp
 
 diff --git a/server/Android.mk b/server/Android.mk
-index fc85fa4..6aff06b 100755
+index 55aa87c..8790447 100644
 --- a/server/Android.mk
 +++ b/server/Android.mk
 @@ -25,7 +25,7 @@ LOCAL_C_INCLUDES := \
@@ -24,7 +24,7 @@ index fc85fa4..6aff06b 100755
  LOCAL_MODULE := netd
  
  LOCAL_SHARED_LIBRARIES := \
-@@ -61,7 +61,6 @@ LOCAL_SRC_FILES := \
+@@ -61,13 +61,22 @@ LOCAL_SRC_FILES := \
          PppController.cpp \
          ResolverController.cpp \
          RouteController.cpp \
@@ -32,9 +32,8 @@ index fc85fa4..6aff06b 100755
          TetherController.cpp \
          UidRanges.cpp \
          VirtualNetwork.cpp \
-@@ -83,6 +82,16 @@ ifdef WPA_SUPPLICANT_VERSION
-   LOCAL_C_INCLUDES += external/wpa_supplicant_8/src/common
- endif
+         main.cpp \
+         oem_iptables_hook.cpp \
  
 +ifeq ($(BOARD_HAS_ATH_WLAN),true)
 +  LOCAL_CFLAGS += -DATH_WLAN
@@ -50,10 +49,10 @@ index fc85fa4..6aff06b 100755
  
  include $(CLEAR_VARS)
 diff --git a/server/CommandListener.cpp b/server/CommandListener.cpp
-index d6d7ca6..b29bd7f 100644
+index b8bcf1a..ed308d1 100644
 --- a/server/CommandListener.cpp
 +++ b/server/CommandListener.cpp
-@@ -873,9 +873,18 @@ int CommandListener::SoftapCmd::runCommand(SocketClient *cli,
+@@ -756,9 +756,18 @@ int CommandListener::SoftapCmd::runCommand(SocketClient *cli,
                       "Missing argument in a SoftAP command", false);
          return 0;
      }
@@ -74,11 +73,11 @@ index d6d7ca6..b29bd7f 100644
          rc = sSoftapCtrl->stopSoftap();
      } else if (!strcmp(argv[1], "fwreload")) {
 diff --git a/server/SoftapController.h b/server/SoftapController.h
-index fd53939..a2cc137 100755
+index 7063067..b520fca 100644
 --- a/server/SoftapController.h
 +++ b/server/SoftapController.h
-@@ -34,6 +34,10 @@ public:
-     SoftapController(SocketListener *sl);
+@@ -32,12 +32,20 @@ public:
+     SoftapController();
      virtual ~SoftapController();
  
 +#ifdef ATH_WLAN
@@ -88,23 +87,22 @@ index fd53939..a2cc137 100755
      int startSoftap();
      int stopSoftap();
      bool isSoftapStarted();
-@@ -46,6 +50,10 @@ private:
-     int mThreadErr;
-     int mHostapdFlag;
- #endif
+     int setSoftap(int argc, char *argv[]);
+     int fwReloadSoftap(int argc, char *argv[]);
+ private:
 +#ifdef ATH_WLAN
 +    char mBuf[SOFTAP_MAX_BUFFER_SIZE];
 +    char mIface[IFNAMSIZ];
 +#endif
      pid_t mPid;
      void generatePsk(char *ssid, char *passphrase, char *psk);
- #ifdef LIBWPA_CLIENT_EXISTS
+ };
 diff --git a/server/SoftapControllerATH.cpp b/server/SoftapControllerATH.cpp
 new file mode 100644
 index 0000000..34fa285
 --- /dev/null
 +++ b/server/SoftapControllerATH.cpp
-@@ -0,0 +1,817 @@
+@@ -0,0 +1,816 @@
 +/*
 + * Copyright (C) 2008 The Android Open Source Project
 + *
@@ -516,9 +514,8 @@ index 0000000..34fa285
 +    return ret;
 +}
 +
-+SoftapController::SoftapController(SocketListener *sl)
++SoftapController::SoftapController()
 +    : mPid(0) {
-+    mSpsl = sl;
 +    memset(mIface, 0, sizeof(mIface));
 +    mProfileValid = 0;
 +    ctrl_conn = NULL;
@@ -923,5 +920,5 @@ index 0000000..34fa285
 +    return ResponseCode::SoftapStatusResult;
 +} 
 -- 
-2.2.1
+2.3.6
 
