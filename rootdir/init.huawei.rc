@@ -135,6 +135,8 @@ on boot
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 320000
 
     write /sys/devices/platform/msm_sdcc.1/idle_timeout 10
+    write /proc/sys/vm/min_free_kbytes 4096
+    write /proc/sys/vm/extra_free_kbytes 4096
     write /proc/sys/vm/page-cluster 0
 
     write /sys/module/pm2/modes/cpu0/standalone_power_collapse/idle_enabled 1
@@ -154,10 +156,11 @@ on boot
     chown root system /sys/module/lowmemorykiller/parameters/minfree
     chmod 0664 /sys/module/lowmemorykiller/parameters/minfree
 
-    write /proc/sys/vm/min_free_kbytes 4096
-    write /proc/sys/vm/extra_free_kbytes 4096
-    write /proc/sys/vm/swappiness 50
+    # Enable UKSM
     write /sys/kernel/mm/uksm/run 1
+
+    # Enable sysrq
+    write /proc/sys/kernel/sysrq 1
 
     # Run sysinit
     start sysinit
@@ -198,6 +201,9 @@ on post-fs-data
     mkdir /data/wpstiles/ 0755 shell
     mkdir /data/wiper 0755 gps qcom_oncrpc
 
+    # Set button backlight brightness
+    write /sys/class/leds/button-backlight/max_brightness 50
+
     chown system system /sys/class/android_usb/android0/f_mass_storage/lun/file
     chmod 0660 /sys/class/android_usb/android0/f_mass_storage/lun/file
     chown system system /sys/class/android_usb/android0/f_rndis/ethaddr
@@ -210,9 +216,6 @@ on property:init.svc.wpa_supplicant=stopped
 
 on property:wlan.driver.status=unloaded
     start hwmac
-
-on property:sys.boot_completed=1
-    write /sys/module/lowmemorykiller/parameters/minfree 1536,3072,6656,12288,16384,24576
 
 service hwmac /system/bin/hwmac
     class main
