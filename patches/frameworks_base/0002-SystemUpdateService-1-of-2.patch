@@ -1,6 +1,6 @@
-From 29c26f6e51bd224f1914be71fd6c9c4f3a321525 Mon Sep 17 00:00:00 2001
+From 083e32baa46481e3bb8e682bf9db8c8c469d2afd Mon Sep 17 00:00:00 2001
 From: Kyle Harrison <khwebmail@gmail.com>
-Date: Wed, 18 Mar 2015 14:19:57 +0000
+Date: Thu, 21 May 2015 14:11:47 +0100
 Subject: [PATCH] SystemUpdateService: enable service but lock its receivers
  [1/2]
 
@@ -9,54 +9,52 @@ re-enabled at runtime
 
 Added code for forcing enable of previously disabled components
 
-Change-Id: Ifda21dc8f50b786eb55206671fbe4bfb770cbc09
+Change-Id: I3a2d30d208e59c8bfb8d913a465eaa22d9d34d3d
 ---
- core/res/res/values/config.xml                     |  4 ++++
+ core/res/res/values/config.xml                     |  5 +++++
  core/res/res/values/slim_symbols.xml               |  1 +
  .../android/server/pm/PackageManagerService.java   | 26 ++++++++++++++++++++++
- 3 files changed, 31 insertions(+)
+ 3 files changed, 32 insertions(+)
 
 diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
-index ba0689d..6dc5448 100644
+index f78b88d..cab1483 100755
 --- a/core/res/res/values/config.xml
 +++ b/core/res/res/values/config.xml
-@@ -1941,6 +1941,10 @@
+@@ -2260,4 +2260,9 @@
+     <!-- The list of components which should be automatically disabled. -->
      <string-array name="config_disabledComponents" translatable="false">
      </string-array>
- 
++
 +    <!-- The list of components which should be forced to be enabled. -->
 +    <string-array name="config_forceEnabledComponents" translatable="false">
 +    </string-array>
 +
-     <!-- Is the device LTE capable -->
-     <bool name="config_lte_capable">true</bool>
- 
+ </resources>
 diff --git a/core/res/res/values/slim_symbols.xml b/core/res/res/values/slim_symbols.xml
-index 17a5864..0ea0fec 100644
+index bf0d1de..f84c511 100644
 --- a/core/res/res/values/slim_symbols.xml
 +++ b/core/res/res/values/slim_symbols.xml
-@@ -22,6 +22,7 @@
+@@ -120,5 +120,6 @@
  
    <!-- Package Manager -->
    <java-symbol type="array" name="config_disabledComponents" />
 +  <java-symbol type="array" name="config_forceEnabledComponents" />
  
-   <!-- Privacy Guard -->
-   <java-symbol type="string" name="privacy_guard_notification" />
+ </resources>
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index 64a7989..f95af0d 100644
+index f71a27f..f4d4e4c 100755
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
-@@ -495,6 +495,8 @@ public class PackageManagerService extends IPackageManager.Stub {
-     private AppOpsManager mAppOps;
+@@ -497,6 +497,8 @@ public class PackageManagerService extends IPackageManager.Stub {
+     ComponentName mCustomResolverComponentName;
  
      boolean mResolverReplaced = false;
 +    
 +    ArrayList<ComponentName> mDisabledComponentsList;
  
-     // Set of pending broadcasts for aggregating enable/disable of components.
-     static class PendingPackageBroadcasts {
-@@ -1816,9 +1818,11 @@ public class PackageManagerService extends IPackageManager.Stub {
+     private AppOpsManager mAppOps;
+ 
+@@ -1814,9 +1816,11 @@ public class PackageManagerService extends IPackageManager.Stub {
              }
  
              // Disable components marked for disabling at build-time
@@ -68,7 +66,7 @@ index 64a7989..f95af0d 100644
                  Slog.v(TAG, "Disabling " + name);
                  String className = cn.getClassName();
                  PackageSetting pkgSetting = mSettings.mPackages.get(cn.getPackageName());
-@@ -1830,6 +1834,21 @@ public class PackageManagerService extends IPackageManager.Stub {
+@@ -1828,6 +1832,21 @@ public class PackageManagerService extends IPackageManager.Stub {
                  pkgSetting.disableComponentLPw(className, UserHandle.USER_OWNER);
              }
  
@@ -87,10 +85,10 @@ index 64a7989..f95af0d 100644
 +                pkgSetting.enableComponentLPw(className, UserHandle.USER_OWNER);
 +            }
 +
-             // All the changes are done during package scanning.
-             mSettings.updateInternalDatabaseVersion();
- 
-@@ -12070,6 +12089,12 @@ public class PackageManagerService extends IPackageManager.Stub {
+             // If this is first boot after an OTA, and a normal boot, then
+             // we need to clear code cache directories.
+             mIsUpgrade = !Build.FINGERPRINT.equals(mSettings.mFingerprint);
+@@ -12240,6 +12259,12 @@ public class PackageManagerService extends IPackageManager.Stub {
      public void setComponentEnabledSetting(ComponentName componentName,
              int newState, int flags, int userId) {
          if (!sUserManager.exists(userId)) return;
@@ -103,7 +101,7 @@ index 64a7989..f95af0d 100644
          setEnabledSetting(componentName.getPackageName(),
                  componentName.getClassName(), newState, flags, userId, null);
      }
-@@ -12084,6 +12109,7 @@ public class PackageManagerService extends IPackageManager.Stub {
+@@ -12254,6 +12279,7 @@ public class PackageManagerService extends IPackageManager.Stub {
              throw new IllegalArgumentException("Invalid new component state: "
                      + newState);
          }
@@ -112,5 +110,5 @@ index 64a7989..f95af0d 100644
          final int uid = Binder.getCallingUid();
          final int permission = mContext.checkCallingOrSelfPermission(
 -- 
-2.3.2
+2.4.1
 
