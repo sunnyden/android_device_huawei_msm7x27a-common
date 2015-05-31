@@ -21,7 +21,7 @@ $(call inherit-product, device/common/gps/gps_eu_supl.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/huawei/msm7x27a-common/overlay
 
-PRODUCT_AAPT_CONFIG := normal hdpi
+PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 
 # Packages
@@ -59,10 +59,11 @@ PRODUCT_PACKAGES += \
     setup_fs
 
 # FM Radio
-PRODUCT_PACKAGES += \
-    FMRadio \
-    libqcomfm_jni \
-    qcom.fmradio
+#PRODUCT_PACKAGES += \
+#    FM2 \
+#    FMRecord \
+#    libqcomfm_jni \
+#    qcom.fmradio
 
 #wifi
 PRODUCT_PACKAGES += \
@@ -180,10 +181,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.sys.fw.bg_apps_limit=16
     
 # FM Radio
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.fm.analogpath.supported=false \
-    ro.fm.transmitter=false \
-    ro.fm.mulinst.recording.support=false
+#PRODUCT_PROPERTY_OVERRIDES += \
+#    ro.fm.analogpath.supported=false \
+#    ro.fm.transmitter=false \
+#    ro.fm.mulinst.recording.support=false
 
 # Stagefright
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -202,12 +203,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
    camera2.portability.force_api=1
 
-# Use ART small mode
+# ART
 PRODUCT_PROPERTY_OVERRIDES += \
    dalvik.vm.dex2oat-filter=interpret-only \
+   dalvik.vm.dex2oat-flags=--no-watch-dog \
    dalvik.vm.image-dex2oat-filter=speed
 
-# ART properties
 ADDITIONAL_DEFAULT_PROPERTIES += \
    dalvik.vm.dex2oat-Xms=8m \
    dalvik.vm.dex2oat-Xmx=96m \
