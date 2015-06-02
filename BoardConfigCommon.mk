@@ -153,7 +153,6 @@ ifeq ($(HOST_OS),linux)
 endif
 WITH_DEXPREOPT_PIC := true
 DONT_DEXPREOPT_PREBUILTS := true
-WITH_DEXPREOPT_COMP := false
 
 # Include an expanded selection of fonts
 EXTENDED_FONT_FOOTPRINT := true
