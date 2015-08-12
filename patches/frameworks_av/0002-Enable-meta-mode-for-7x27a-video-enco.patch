@@ -1,6 +1,6 @@
-From 6110a32f5890eddb5e3a59e09bb70ad4c60d73cf Mon Sep 17 00:00:00 2001
-From: Mahesh Lanka <mlanka@codeaurora.org>
-Date: Fri, 23 Dec 2011 13:17:09 +0000
+From 46dfbaacc23f343623e09e575cc41b7e12fc1a15 Mon Sep 17 00:00:00 2001
+From: Kyle Harrison <khwebmail@gmail.com>
+Date: Wed, 12 Aug 2015 20:21:07 +0100
 Subject: [PATCH] libstagefright: Enable meta mode for 7x27a video encoder
 
 msm7627a family of chipsets supports only one input frame at
@@ -83,12 +83,12 @@ index 90d4a25..eb98fac 100644
  
      if (cameraSource == NULL) {
 diff --git a/media/libstagefright/Android.mk b/media/libstagefright/Android.mk
-index 708900d..ee7d830 100644
+index 530b4bd..b4ad914 100644
 --- a/media/libstagefright/Android.mk
 +++ b/media/libstagefright/Android.mk
-@@ -230,6 +230,10 @@ LOCAL_C_INCLUDES += \
- 	$(TOP)/hardware/samsung/exynos4/include
- endif
+@@ -234,6 +234,10 @@ endif
+ LOCAL_C_INCLUDES += \
+ 	$(TOP)/external/stagefright-plugins/include
  
 +ifeq ($(TARGET_BOARD_PLATFORM),msm7x27a)
 +    LOCAL_CFLAGS += -DUSE_SUBMIT_ONE_INPUT_BUFFER
@@ -98,7 +98,7 @@ index 708900d..ee7d830 100644
  
  LOCAL_MODULE_TAGS := optional
 diff --git a/media/libstagefright/MediaCodecSource.cpp b/media/libstagefright/MediaCodecSource.cpp
-index db8142d..8865bf1 100644
+index 7c81570..203a222 100644
 --- a/media/libstagefright/MediaCodecSource.cpp
 +++ b/media/libstagefright/MediaCodecSource.cpp
 @@ -431,7 +431,13 @@ status_t MediaCodecSource::initEncoder() {
@@ -117,5 +117,5 @@ index db8142d..8865bf1 100644
          mOutputFormat->setInt32("create-input-buffers-suspended", 1);
      }
 -- 
-2.3.6
+2.4.6
 
