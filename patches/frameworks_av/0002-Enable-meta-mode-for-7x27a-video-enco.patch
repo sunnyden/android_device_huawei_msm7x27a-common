@@ -1,4 +1,4 @@
-From 46dfbaacc23f343623e09e575cc41b7e12fc1a15 Mon Sep 17 00:00:00 2001
+From 9b9bbc6caed87207b3106e271e93851e4f55b459 Mon Sep 17 00:00:00 2001
 From: Kyle Harrison <khwebmail@gmail.com>
 Date: Wed, 12 Aug 2015 20:21:07 +0100
 Subject: [PATCH] libstagefright: Enable meta mode for 7x27a video encoder
@@ -83,12 +83,12 @@ index 90d4a25..eb98fac 100644
  
      if (cameraSource == NULL) {
 diff --git a/media/libstagefright/Android.mk b/media/libstagefright/Android.mk
-index 530b4bd..b4ad914 100644
+index 6b02b07..91cf84d 100644
 --- a/media/libstagefright/Android.mk
 +++ b/media/libstagefright/Android.mk
-@@ -234,6 +234,10 @@ endif
- LOCAL_C_INCLUDES += \
- 	$(TOP)/external/stagefright-plugins/include
+@@ -251,6 +251,10 @@ ifeq ($(BOARD_USE_SEIREN_AUDIO), true)
+ LOCAL_CFLAGS += -DUSE_SEIREN_AUDIO
+ endif
  
 +ifeq ($(TARGET_BOARD_PLATFORM),msm7x27a)
 +    LOCAL_CFLAGS += -DUSE_SUBMIT_ONE_INPUT_BUFFER
@@ -117,5 +117,5 @@ index 7c81570..203a222 100644
          mOutputFormat->setInt32("create-input-buffers-suspended", 1);
      }
 -- 
-2.4.6
+2.5.0
 
