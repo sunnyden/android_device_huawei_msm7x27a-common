@@ -102,7 +102,7 @@ BOARD_KERNEL_BASE := 0x00200000
 BOARD_KERNEL_CMDLINE := androidboot.hardware=huawei androidboot.selinux=permissive
 BOARD_PAGE_SIZE := 2048
 TARGET_KERNEL_SOURCE := kernel/huawei/huawei-kernel-3.4
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-4.9-14.06/bin/arm-linux-gnueabihf-
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-4.9-15.05/bin/arm-linux-gnueabihf-
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01800000
 
 # Lights
