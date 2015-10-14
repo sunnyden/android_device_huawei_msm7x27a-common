@@ -214,4 +214,12 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
    dalvik.vm.image-dex2oat-Xms=48m \
    dalvik.vm.image-dex2oat-Xmx=48m
 
+# Allow ADB by default
+ADDITIONAL_DEFAULT_PROPERTIES += \
+   ro.secure=0 \
+   ro.adb.secure=0
+
+PRODUCT_PROPERTY_OVERRIDES += \
+   persist.sys.root_access=3
+
 $(call inherit-product, vendor/huawei/msm7x27a-common/msm7x27a-common-vendor.mk)
