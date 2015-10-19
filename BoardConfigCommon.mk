@@ -142,11 +142,7 @@ WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # Enable dex-preoptimization to speed up first boot sequence
 ifeq ($(HOST_OS),linux)
-  ifeq ($(TARGET_BUILD_VARIANT),userdebug)
-    ifeq ($(WITH_DEXPREOPT),)
-      WITH_DEXPREOPT := true
-    endif
-  endif
+  WITH_DEXPREOPT := true
 endif
 WITH_DEXPREOPT_PIC := true
 DONT_DEXPREOPT_PREBUILTS := true
@@ -156,3 +152,6 @@ EXTENDED_FONT_FOOTPRINT := true
 
 # Enable Minikin text layout engine (will be the default soon)
 USE_MINIKIN := true
+
+BOARD_CANT_BUILD_RECOVERY_FROM_BOOT_PATCH := true
+TARGET_NOT_USE_GZIP_RECOVERY_RAMDISK := true
