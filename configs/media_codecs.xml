@@ -87,5 +87,6 @@
     <Include href="media_codecs_google_audio.xml" />
     <Include href="media_codecs_google_telephony.xml" />
     <Include href="media_codecs_google_video_le.xml" />
-    <Include href="media_codecs_ffmpeg.xml" />
+    <!-- Disable FFMpeg
+    <Include href="media_codecs_ffmpeg.xml" /> -->
 </MediaCodecs>
