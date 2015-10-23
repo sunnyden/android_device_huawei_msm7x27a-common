@@ -66,6 +66,8 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES +=  libstlport
 
+PRODUCT_PACKAGES +=  libhuawei
+
 #wifi
 PRODUCT_PACKAGES += \
     libwpa_client \
