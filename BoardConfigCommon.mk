@@ -158,6 +158,4 @@ EXTENDED_FONT_FOOTPRINT := true
 # Enable Minikin text layout engine (will be the default soon)
 USE_MINIKIN := true
 
-BOARD_CANT_BUILD_RECOVERY_FROM_BOOT_PATCH := true
-TARGET_NOT_USE_GZIP_RECOVERY_RAMDISK := true
 BLOCK_BASED_OTA := false
