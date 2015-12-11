@@ -222,6 +222,10 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
    dalvik.vm.image-dex2oat-Xms=48m \
    dalvik.vm.image-dex2oat-Xmx=48m
 
+# OTAUpdater
+PRODUCT_PACKAGES += \
+   OTAUpdater
+
 # Allow ADB by default
 ADDITIONAL_DEFAULT_PROPERTIES += \
    ro.secure=0 \
