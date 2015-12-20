@@ -1,4 +1,4 @@
-From e829dd6b641b4785dbccd668e4669f29c09f59cb Mon Sep 17 00:00:00 2001
+From ea3796c4c4030a98e0a999cc7edf3bff3f5f9cf3 Mon Sep 17 00:00:00 2001
 From: Kyle Harrison <khwebmail@gmail.com>
 Date: Mon, 24 Nov 2014 15:47:03 +0000
 Subject: [PATCH] Update Huawei SoftapControllerATH for 5.0
@@ -12,7 +12,7 @@ Subject: [PATCH] Update Huawei SoftapControllerATH for 5.0
  create mode 100644 server/SoftapControllerATH.cpp
 
 diff --git a/server/Android.mk b/server/Android.mk
-index 2548df4..a4ae153 100644
+index ddfaed5..aefd8a3 100644
 --- a/server/Android.mk
 +++ b/server/Android.mk
 @@ -23,7 +23,7 @@ LOCAL_C_INCLUDES := \
@@ -32,8 +32,8 @@ index 2548df4..a4ae153 100644
          StrictController.cpp \
          TetherController.cpp \
          UidRanges.cpp \
-@@ -86,6 +85,16 @@ ifeq ($(BOARD_HAS_QCOM_WLAN), true)
-   LOCAL_C_INCLUDES += $(TARGET_OUT_HEADERS)/sdk/softap/include
+@@ -88,6 +87,16 @@ ifeq ($(BOARD_HAS_QCOM_WLAN), true)
+ endif
  endif
  
 +ifeq ($(BOARD_HAS_ATH_WLAN),true)
@@ -50,7 +50,7 @@ index 2548df4..a4ae153 100644
  
  include $(CLEAR_VARS)
 diff --git a/server/CommandListener.cpp b/server/CommandListener.cpp
-index 895090a..081dffc 100755
+index e18fc05..40ba531 100755
 --- a/server/CommandListener.cpp
 +++ b/server/CommandListener.cpp
 @@ -802,6 +802,14 @@ int CommandListener::SoftapCmd::runCommand(SocketClient *cli,
@@ -920,5 +920,5 @@ index 0000000..fe34d81
 +    return ResponseCode::SoftapStatusResult;
 +} 
 -- 
-2.6.1
+2.6.4
 
